@@ -121,3 +121,50 @@ export async function getEventBySlug(slug: string): Promise<EventItem | null> {
 
   return FALLBACK_EVENTS.find((e) => e.slug === slug) || null;
 }
+
+export async function getEventById(id: string): Promise<EventItem | null> {
+  try {
+    const event = await db.event.findUnique({
+      where: { id },
+    });
+
+    if (event) return event as unknown as EventItem;
+  } catch (e) {
+    // Database fallback
+  }
+
+  return FALLBACK_EVENTS.find((e) => e.id === id) || null;
+}
+
+
+export async function searchEvents(query: string): Promise<EventItem[]> {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+
+  try {
+    const events = await db.event.findMany({
+      where: {
+        OR: [
+          { title: { contains: q, mode: "insensitive" } },
+          { description: { contains: q, mode: "insensitive" } },
+          { location: { contains: q, mode: "insensitive" } },
+          { organizer: { contains: q, mode: "insensitive" } },
+        ],
+      },
+      orderBy: { eventDate: "asc" },
+      take: 10,
+    });
+    if (events && events.length > 0) return events as unknown as EventItem[];
+  } catch (e) {
+    // Database fallback
+  }
+
+  return FALLBACK_EVENTS.filter(
+    (e) =>
+      e.title.toLowerCase().includes(q) ||
+      e.description.toLowerCase().includes(q) ||
+      e.location.toLowerCase().includes(q) ||
+      e.organizer.toLowerCase().includes(q)
+  );
+}
+

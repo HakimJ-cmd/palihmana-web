@@ -1,33 +1,67 @@
-import { clsx, type ClassValue } from "clsx";
-import { format, formatDistanceToNow, differenceInDays } from "date-fns";
-import { id as localeId } from "date-fns/locale";
+export type ClassValue = string | number | boolean | undefined | null | { [key: string]: any } | ClassValue[];
 
 // ─── Class names ────────────────────────────────────────────────
-export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs);
+export function cn(...inputs: ClassValue[]): string {
+  const classes: string[] = [];
+  for (const input of inputs) {
+    if (!input) continue;
+    if (typeof input === "string" || typeof input === "number") {
+      classes.push(String(input));
+    } else if (Array.isArray(input)) {
+      const inner = cn(...input);
+      if (inner) classes.push(inner);
+    } else if (typeof input === "object") {
+      for (const key of Object.keys(input)) {
+        if ((input as any)[key]) classes.push(key);
+      }
+    }
+  }
+  return classes.join(" ");
 }
 
 // ─── Date formatting ────────────────────────────────────────────
 export function formatDate(date: Date | string | null | undefined): string {
   if (!date) return "";
-  const d = typeof date === "string" ? new Date(date) : date;
-  return format(d, "d MMMM yyyy", { locale: localeId });
+  try {
+    const d = typeof date === "string" ? new Date(date) : date;
+    return d.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return "";
+  }
 }
 
 export function formatDateShort(date: Date | string | null | undefined): string {
   if (!date) return "";
-  const d = typeof date === "string" ? new Date(date) : date;
-  return format(d, "d MMM yyyy", { locale: localeId });
+  try {
+    const d = typeof date === "string" ? new Date(date) : date;
+    return d.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  } catch {
+    return "";
+  }
 }
 
 export function formatRelative(date: Date | string | null | undefined): string {
   if (!date) return "";
-  const d = typeof date === "string" ? new Date(date) : date;
-  const days = differenceInDays(new Date(), d);
-  if (days < 7) {
-    return formatDistanceToNow(d, { addSuffix: true, locale: localeId });
+  try {
+    const d = typeof date === "string" ? new Date(date) : date;
+    const diffMs = Date.now() - d.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    if (diffHours < 1) return "Baru saja";
+    if (diffHours < 24) return `${diffHours} jam lalu`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 7) return `${diffDays} hari lalu`;
+    return formatDateShort(d);
+  } catch {
+    return formatDate(date);
   }
-  return formatDate(d);
 }
 
 export function formatFreshness(

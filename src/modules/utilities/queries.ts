@@ -173,3 +173,47 @@ export async function getUtilities(category?: UtilityCategory): Promise<UtilityI
   }
   return FALLBACK_UTILITIES;
 }
+
+export async function searchUtilities(query: string): Promise<UtilityItem[]> {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+
+  try {
+    const items = await db.utility.findMany({
+      where: {
+        isActive: true,
+        OR: [
+          { title: { contains: q, mode: "insensitive" } },
+          { description: { contains: q, mode: "insensitive" } },
+          { address: { contains: q, mode: "insensitive" } },
+        ],
+      },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+    });
+    if (items && items.length > 0) return items as unknown as UtilityItem[];
+  } catch (e) {
+    // Database fallback
+  }
+
+  return FALLBACK_UTILITIES.filter(
+    (u) =>
+      u.title.toLowerCase().includes(q) ||
+      u.description.toLowerCase().includes(q) ||
+      (u.address && u.address.toLowerCase().includes(q))
+  );
+}
+
+export async function getUtilityBySlug(slug: string): Promise<UtilityItem | null> {
+  try {
+    const item = await db.utility.findUnique({
+      where: { slug },
+    });
+    if (item) return item as unknown as UtilityItem;
+  } catch (e) {
+    // Database fallback
+  }
+
+  return FALLBACK_UTILITIES.find((u) => u.slug === slug) || null;
+}
+
+

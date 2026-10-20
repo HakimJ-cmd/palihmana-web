@@ -3,7 +3,18 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, Plus, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  Save,
+  Plus,
+  Trash2,
+  CheckCircle2,
+  AlertCircle,
+  ShieldCheck,
+  FileCheck,
+  AlertTriangle,
+  Info,
+} from "lucide-react";
 import { PILAR_LABELS, STATUS_LABELS, GEO_LABELS } from "@/lib/constants";
 
 export default function CreateArticlePage() {
@@ -19,16 +30,25 @@ export default function CreateArticlePage() {
     geoScope: "LOCAL",
     status: "DRAFT",
     isFeatured: false,
+    isSponsored: false,
     coverImage: "",
     coverAlt: "",
     coverCredit: "",
     readingMinutes: 4,
     bodyText: "",
+    // Fact-Check fields (PRD F4-CMS-02)
+    claims: "",
+    primarySources: "",
+    secondarySources: "",
+    unverifiedItemsText: "",
+    riskLevel: "LOW",
+    comparability: "SAFE_TO_COMPARE",
+    factCheckStatus: "NEEDS_VERIFICATION",
+    // Correction note (PRD F4-CMS-04)
+    correctionNote: "",
   });
 
-  const [summaryPoints, setSummaryPoints] = useState<string[]>([
-    "",
-  ]);
+  const [summaryPoints, setSummaryPoints] = useState<string[]>([""]);
 
   const handlePointChange = (index: number, val: string) => {
     const updated = [...summaryPoints];
@@ -50,10 +70,21 @@ export default function CreateArticlePage() {
     setErrorMsg("");
     setSuccessMsg("");
 
+    // Validation: prevent publish if status is high risk and not verified
+    if (formData.status === "PUBLISHED" && formData.factCheckStatus !== "READY_FOR_NEWSROOM") {
+      setErrorMsg("Standar Redaksi: Artikel tidak dapat ditayangkan langsung jika Fact-Check belum berstatus 'Ready for Newsroom'.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const payload = {
         ...formData,
         summaryPoints: summaryPoints.filter((p) => p.trim() !== ""),
+        unverifiedItems: formData.unverifiedItemsText
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean),
       };
 
       const res = await fetch("/api/admin/articles", {
@@ -69,8 +100,8 @@ export default function CreateArticlePage() {
 
       setSuccessMsg(
         json.simulated
-          ? "Artikel berhasil disimpan (mode lokal/pratinjau)."
-          : "Artikel berhasil disimpan dan siap ditayangkan!"
+          ? "Artikel berhasil disimpan dalam sistem redaksi (mode lokal)."
+          : "Artikel dan lembar fact-check berhasil disimpan dan dicatat dalam audit log!"
       );
 
       setTimeout(() => {
@@ -89,7 +120,7 @@ export default function CreateArticlePage() {
       <div className="mb-6">
         <Link
           href="/admin"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary-hover"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary-hover transition-colors"
         >
           <ArrowLeft className="h-4 w-4" /> Kembali ke Dashboard
         </Link>
@@ -98,10 +129,10 @@ export default function CreateArticlePage() {
       {/* ─── Header ─────────────────────────────────────────────────── */}
       <div className="mb-8 border-b border-line pb-4">
         <h1 className="font-serif text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          Tulis Artikel Baru
+          Tulis Artikel Baru & Verifikasi Redaksi
         </h1>
         <p className="mt-1 text-xs text-ink-muted">
-          Patuhi panduan anti-sensasionalisme dan lengkapi sumber verifikasi
+          Patuhi panduan anti-sensasionalisme, sertakan sumber primer, dan catat verifikasi fakta (PRD & Operating Handbook)
         </p>
       </div>
 
@@ -168,7 +199,7 @@ export default function CreateArticlePage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-ink">Cakupan Wilayah</label>
+              <label className="block text-xs font-semibold text-ink">Cakupan Wilayah (Geo Scope)</label>
               <select
                 value={formData.geoScope}
                 onChange={(e) => setFormData({ ...formData, geoScope: e.target.value })}
@@ -198,7 +229,7 @@ export default function CreateArticlePage() {
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="flex flex-wrap items-center gap-6 pt-2">
             <label className="flex items-center gap-2 text-xs font-semibold text-ink cursor-pointer">
               <input
                 type="checkbox"
@@ -208,6 +239,126 @@ export default function CreateArticlePage() {
               />
               Jadikan Sorotan Hero di Beranda
             </label>
+
+            <label className="flex items-center gap-2 text-xs font-semibold text-ink cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.isSponsored}
+                onChange={(e) => setFormData({ ...formData, isSponsored: e.target.checked })}
+                className="h-4 w-4 rounded border-line text-primary focus:ring-primary"
+              />
+              Konten Sponsor / Kemitraan (Wajib Dicantumkan)
+            </label>
+          </div>
+        </div>
+
+        {/* FACT CHECK & VERIFICATION LOGGER (PRD F4-CMS-02 & F4-CMS-03) */}
+        <div className="rounded border border-primary/30 bg-[#eff4ff] dark:bg-[#132238] p-6 space-y-4">
+          <div className="flex items-center gap-2 text-primary border-b border-primary/20 pb-3">
+            <ShieldCheck className="h-5 w-5" />
+            <h2 className="font-serif text-base font-bold text-ink">
+              Fact-Check & Verification Logger (Standar Akurasi Berita)
+            </h2>
+          </div>
+          <p className="text-xs text-ink-muted">
+            Setiap klaim faktual harus memiliki dokumen atau narasumber primer. Pisahkan secara eksplisit butir yang belum teruji.
+          </p>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-xs font-semibold text-ink">
+                Klaim Faktual Utama yang Diverifikasi
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Tuliskan klaim penting (misal: syarat KTP tidak dipungut biaya, waktu pembuatan 3 hari)..."
+                value={formData.claims}
+                onChange={(e) => setFormData({ ...formData, claims: e.target.value })}
+                className="mt-1 w-full rounded border border-line bg-surface p-2.5 text-xs text-ink focus:border-primary focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">
+                Sumber Primer (Dokumen Resmi / Instansi / Wawancara)
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Contoh: SK Kadisdukcapil Tasikmalaya No. 12/2026, Wawancara langsung Kabid Pelayanan..."
+                value={formData.primarySources}
+                onChange={(e) => setFormData({ ...formData, primarySources: e.target.value })}
+                className="mt-1 w-full rounded border border-line bg-surface p-2.5 text-xs text-ink focus:border-primary focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-xs font-semibold text-ink">
+                Sumber Sekunder (Riset / Media Kredibel)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Laporan BPS Kota Tasikmalaya 2025, Data Kemenpan RB..."
+                value={formData.secondarySources}
+                onChange={(e) => setFormData({ ...formData, secondarySources: e.target.value })}
+                className="mt-1 w-full rounded border border-line bg-surface p-2.5 text-xs text-ink focus:border-primary focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">
+                Butir Belum Terverifikasi (Wajib Dipisahkan Eksplisit)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Satu butir per baris jika ada hal yang masih menunggu konfirmasi..."
+                value={formData.unverifiedItemsText}
+                onChange={(e) => setFormData({ ...formData, unverifiedItemsText: e.target.value })}
+                className="mt-1 w-full rounded border border-line bg-surface p-2.5 text-xs text-ink focus:border-primary focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 pt-2">
+            <div>
+              <label className="block text-xs font-semibold text-ink">Tingkat Risiko Informasi</label>
+              <select
+                value={formData.riskLevel}
+                onChange={(e) => setFormData({ ...formData, riskLevel: e.target.value })}
+                className="mt-1 h-10 w-full rounded border border-line bg-surface px-3 text-xs text-ink focus:border-primary focus:outline-none"
+              >
+                <option value="LOW">Rendah (Low Risk)</option>
+                <option value="MEDIUM">Sedang (Medium Risk)</option>
+                <option value="HIGH">Tinggi (High Risk - Isu Sensitif/Hukum)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Uji Komparabilitas Data Lintas Tahun</label>
+              <select
+                value={formData.comparability}
+                onChange={(e) => setFormData({ ...formData, comparability: e.target.value })}
+                className="mt-1 h-10 w-full rounded border border-line bg-surface px-3 text-xs text-ink focus:border-primary focus:outline-none"
+              >
+                <option value="SAFE_TO_COMPARE">Aman Dibandingkan</option>
+                <option value="NEEDS_NOTE">Perlu Catatan Metodologi</option>
+                <option value="DO_NOT_COMPARE">Jangan Dibandingkan Langsung</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Status Fact-Check</label>
+              <select
+                value={formData.factCheckStatus}
+                onChange={(e) => setFormData({ ...formData, factCheckStatus: e.target.value })}
+                className="mt-1 h-10 w-full rounded border border-line bg-surface px-3 text-xs text-ink focus:border-primary focus:outline-none font-semibold text-primary"
+              >
+                <option value="NOT_READY">Belum Siap</option>
+                <option value="NEEDS_VERIFICATION">Perlu Verifikasi Lanjutan</option>
+                <option value="READY_FOR_NEWSROOM">Ready for Newsroom (Siap Terbit)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -260,7 +411,7 @@ export default function CreateArticlePage() {
             <button
               type="button"
               onClick={addPoint}
-              className="inline-flex items-center gap-1 rounded border border-line px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-alt"
+              className="inline-flex items-center gap-1 rounded border border-line px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-alt transition-colors"
             >
               <Plus className="h-3.5 w-3.5" /> Tambah Poin
             </button>
@@ -300,11 +451,11 @@ export default function CreateArticlePage() {
               <label className="text-xs text-ink-muted">Estimasi waktu baca:</label>
               <input
                 type="number"
-                min={1}
-                max={30}
+                min="1"
+                max="60"
                 value={formData.readingMinutes}
                 onChange={(e) => setFormData({ ...formData, readingMinutes: Number(e.target.value) })}
-                className="h-8 w-16 rounded border border-line bg-surface px-2 text-center text-xs text-ink"
+                className="h-8 w-16 rounded border border-line bg-surface px-2 text-xs text-center text-ink"
               />
               <span className="text-xs text-ink-muted">menit</span>
             </div>
@@ -313,28 +464,48 @@ export default function CreateArticlePage() {
           <textarea
             required
             rows={12}
-            placeholder="Ketik isi artikel di sini... Pisahkan antar paragraf dengan dua kali enter (baris baru ganda)."
+            placeholder="Tulis naskah lengkap di sini. Gunakan baris baru ganda antar paragraf..."
             value={formData.bodyText}
             onChange={(e) => setFormData({ ...formData, bodyText: e.target.value })}
-            className="w-full rounded border border-line bg-surface p-4 font-sans text-sm leading-relaxed text-ink focus:border-primary focus:outline-none"
+            className="w-full rounded border border-line bg-surface p-3 font-sans text-sm text-ink leading-relaxed focus:border-primary focus:outline-none"
           />
         </div>
 
-        {/* Action Buttons */}
+        {/* Correction Note Box (PRD F4-CMS-04) */}
+        <div className="rounded border border-line bg-surface p-6 space-y-4">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <h2 className="font-serif text-base font-bold text-ink">
+              Catatan Ralat / Koreksi (Opsional)
+            </h2>
+          </div>
+          <p className="text-xs text-ink-muted">
+            Jika artikel ini merupakan perbaikan atas kekeliruan sebelumnya, tuliskan ralat secara transparan. Catatan akan tampil di kotak ralat bagian atas artikel.
+          </p>
+          <textarea
+            rows={2}
+            placeholder="Contoh: Ralat: Pada versi awal tertulis hari Senin. Jadwal resmi yang berlaku adalah setiap hari Selasa..."
+            value={formData.correctionNote}
+            onChange={(e) => setFormData({ ...formData, correctionNote: e.target.value })}
+            className="w-full rounded border border-line bg-surface p-2.5 text-xs text-ink focus:border-primary focus:outline-none"
+          />
+        </div>
+
+        {/* Submit Bar */}
         <div className="flex items-center justify-end gap-3 border-t border-line pt-6">
           <Link
             href="/admin"
-            className="rounded border border-line bg-surface px-5 py-2.5 text-xs font-semibold text-ink hover:bg-surface-alt transition-colors"
+            className="rounded border border-line px-4 py-2.5 text-xs font-semibold text-ink hover:bg-surface-alt transition-colors"
           >
             Batal
           </Link>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded bg-primary px-6 py-2.5 text-xs font-semibold text-white hover:bg-primary-hover disabled:opacity-50 transition-colors"
+            className="inline-flex items-center gap-2 rounded bg-primary px-6 py-2.5 text-xs font-semibold text-white hover:bg-primary-hover disabled:opacity-50 transition-colors shadow-xs"
           >
             <Save className="h-4 w-4" />
-            {isSubmitting ? "Menyimpan..." : "Simpan Artikel"}
+            {isSubmitting ? "Menyimpan..." : "Simpan & Rekam Verifikasi"}
           </button>
         </div>
       </form>

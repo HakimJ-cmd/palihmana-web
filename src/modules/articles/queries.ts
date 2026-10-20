@@ -92,13 +92,20 @@ export const FALLBACK_ARTICLES: ArticleItem[] = [
       ],
     },
     publishedAt: new Date(Date.now() - 86400000),
-    contentUpdatedAt: new Date(Date.now() - 86400000),
-    lastVerifiedAt: null,
+    contentUpdatedAt: new Date(Date.now() - 43200000),
+    lastVerifiedAt: new Date(Date.now() - 43200000),
     author: {
       name: "Super Admin",
       avatar: null,
     },
     tags: [{ tag: { name: "Ekonomi", slug: "ekonomi" } }],
+    corrections: [
+      {
+        id: "corr-1",
+        note: "Ralat Redaksi: Pada rilis awal tertulis periode survei bulan September 2024. Data resmi yang benar mengacu pada rilis BPS periode Maret 2025. Redaksi memohon maaf atas kekeliruan pencatatan bulan tersebut.",
+        createdAt: new Date(Date.now() - 43200000),
+      },
+    ],
   },
   {
     id: "fb-3",
@@ -326,6 +333,105 @@ export async function getArticleBySlug(slug: string): Promise<ArticleItem | null
   return FALLBACK_ARTICLES.find((a) => a.slug === slug) || null;
 }
 
+export async function getArticleById(id: string): Promise<ArticleItem | null> {
+  try {
+    const article = await db.article.findUnique({
+      where: { id },
+      include: {
+        author: { select: { name: true, avatar: true } },
+        tags: { include: { tag: true } },
+        corrections: { orderBy: { createdAt: "asc" } },
+        factChecks: { orderBy: { checkedAt: "desc" }, take: 1 },
+      },
+    });
+
+    if (article) return article as unknown as ArticleItem;
+  } catch (error) {
+    // Database fallback
+  }
+
+  return FALLBACK_ARTICLES.find((a) => a.id === id) || null;
+}
+
+export async function getArticlesByTagSlug(tagSlug: string): Promise<{ articles: ArticleItem[]; tagName: string }> {
+  const cleanSlug = tagSlug.trim().toLowerCase();
+  try {
+    const tag = await db.tag.findUnique({
+      where: { slug: cleanSlug },
+      include: {
+        articles: {
+          include: {
+            article: {
+              include: {
+                author: { select: { name: true, avatar: true } },
+                tags: { include: { tag: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (tag) {
+      const articles = tag.articles
+        .map((at) => at.article)
+        .filter((a) => a.status === ArticleStatus.PUBLISHED);
+      return {
+        tagName: tag.name,
+        articles: articles as unknown as ArticleItem[],
+      };
+    }
+  } catch (error) {
+    // Database fallback
+  }
+
+  // Fallback search in FALLBACK_ARTICLES
+  const matched = FALLBACK_ARTICLES.filter((a) =>
+    a.tags?.some((t) => (t.tag?.slug || t.name?.toLowerCase()) === cleanSlug)
+  );
+
+  const tagName = cleanSlug.charAt(0).toUpperCase() + cleanSlug.slice(1);
+  return {
+    tagName,
+    articles: matched,
+  };
+}
+
+export async function getAllTags(): Promise<Array<{ id: string; name: string; slug: string; count: number }>> {
+  try {
+    const tags = await db.tag.findMany({
+      include: {
+        _count: {
+          select: { articles: true },
+        },
+      },
+      orderBy: { name: "asc" },
+    });
+
+    if (tags && tags.length > 0) {
+      return tags.map((t) => ({
+        id: t.id,
+        name: t.name,
+        slug: t.slug,
+        count: t._count.articles,
+      }));
+    }
+  } catch (error) {
+    // Fallback
+  }
+
+  return [
+    { id: "t-1", name: "Dokumen", slug: "dokumen", count: 3 },
+    { id: "t-2", name: "Kesehatan", slug: "kesehatan", count: 2 },
+    { id: "t-3", name: "Transportasi", slug: "transportasi", count: 2 },
+    { id: "t-4", name: "Ekonomi", slug: "ekonomi", count: 4 },
+    { id: "t-5", name: "Hukum", slug: "hukum", count: 1 },
+    { id: "t-6", name: "Wisata", slug: "wisata", count: 3 },
+    { id: "t-7", name: "UMKM", slug: "umkm", count: 5 },
+    { id: "t-8", name: "Budaya", slug: "budaya", count: 2 },
+  ];
+}
+
 export async function searchArticles(query: string): Promise<ArticleItem[]> {
   const q = query.trim().toLowerCase();
   if (!q) return [];
@@ -360,3 +466,4 @@ export async function searchArticles(query: string): Promise<ArticleItem[]> {
       (a.bodyText && a.bodyText.toLowerCase().includes(q))
   );
 }
+

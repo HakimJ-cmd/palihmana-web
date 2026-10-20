@@ -10,6 +10,28 @@ export default {
           DEFAULT: "var(--color-primary)",
           hover: "var(--color-primary-hover)",
           tint: "var(--color-primary-tint)",
+          container: "#dc2626",
+          fixed: "#ffdad6",
+          "fixed-dim": "#ffb4ab",
+        },
+        "inverse-surface": "#213145",
+        "inverse-on-surface": "#eaf1ff",
+        "surface-bright": "#f8f9ff",
+        "surface-container": "#e5eeff",
+        "surface-container-low": "#eff4ff",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-high": "#dce9ff",
+        "surface-container-highest": "#d3e4fe",
+        "on-surface": "#0b1c30",
+        "on-surface-variant": "#5c403c",
+        "secondary-fixed": "#dae2fd",
+        "secondary-fixed-dim": "#bec6e0",
+        "outline-variant": "#e6bdb8",
+        tertiary: {
+          DEFAULT: "#b50436",
+          container: "#d82b4c",
+          fixed: "#ffdadb",
+          "fixed-dim": "#ffb2b7",
         },
         bg: "var(--color-bg)",
         surface: "var(--color-surface)",
@@ -27,12 +49,14 @@ export default {
         success: "var(--color-success)",
       },
       fontFamily: {
-        serif: ["var(--font-newsreader)", "Merriweather", "Georgia", "serif"],
-        sans: ["var(--font-inter)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        serif: ["var(--font-newsreader)", "Newsreader", "Merriweather", "Georgia", "serif"],
+        sans: ["var(--font-worksans)", "var(--font-inter)", "Work Sans", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        headline: ["var(--font-newsreader)", "Newsreader", "serif"],
+        display: ["var(--font-newsreader)", "Newsreader", "serif"],
       },
       maxWidth: {
-        read: "40.625rem", // 650px
-        page: "75rem",    // 1200px
+        read: "45rem",   // 720px for optimal longform reading
+        page: "80rem",   // 1280px (max-w-7xl)
       },
       borderRadius: {
         sm: "4px",

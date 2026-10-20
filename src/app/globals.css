@@ -4,37 +4,69 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────── */
 :root {
-  --color-primary: #0F4C3A;
-  --color-primary-hover: #0B3A2C;
-  --color-primary-tint: #E6EFEB;
-  --color-bg: #F9F9F7;
+  --color-primary: #B70011;
+  --color-primary-hover: #93000B;
+  --color-primary-tint: #FFF5F5;
+  --color-primary-container: #DC2626;
+  --color-bg: #F8F9FA;
   --color-surface: #FFFFFF;
-  --color-surface-alt: #F3F4F6;
-  --color-text: #1A1A1A;
-  --color-text-muted: #5B6360;
-  --color-border: #E3E3DE;
-  --color-accent: #D97706;
-  --color-accent-tint: #FDF1DC;
-  --color-accent-ink: #8A4B04;
-  --color-danger: #B42318;
-  --color-success: #1F7A4D;
+  --color-surface-alt: #F1F5F9;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-accent: #B50436;
+  --color-accent-tint: #FFE4E6;
+  --color-accent-ink: #881337;
+  --color-danger: #DC2626;
+  --color-success: #16A34A;
 }
 
-[data-theme="dark"] {
-  --color-primary: #4FB591;
-  --color-primary-hover: #3DA07B;
-  --color-primary-tint: #18312A;
-  --color-bg: #121413;
-  --color-surface: #1B1F1D;
-  --color-surface-alt: #1E2422;
-  --color-text: #ECECE8;
-  --color-text-muted: #A3ACA8;
-  --color-border: #2C3330;
-  --color-accent: #F59E0B;
-  --color-accent-tint: #3A2A0B;
-  --color-accent-ink: #FBBF24;
-  --color-danger: #F87171;
-  --color-success: #4ADE80;
+[data-theme="dark"],
+.dark {
+  --color-primary: #EF4444;
+  --color-primary-hover: #F87171;
+  --color-primary-tint: #2B1215;
+  --color-primary-container: #991B1B;
+  --color-bg: #0B0F17;
+  --color-surface: #131B2A;
+  --color-surface-alt: #1E293B;
+  --color-text: #F8FAFC;
+  --color-text-muted: #94A3B8;
+  --color-border: #263347;
+  --color-accent: #F43F5E;
+  --color-accent-tint: #2B1218;
+  --color-accent-ink: #FDA4AF;
+  --color-danger: #EF4444;
+  --color-success: #34D399;
+}
+
+/* Dark mode fallback harmonizers for utility backgrounds */
+[data-theme="dark"] .bg-white,
+.dark .bg-white {
+  background-color: #131B2A !important;
+}
+
+[data-theme="dark"] .bg-\[\#f8f9ff\],
+.dark .bg-\[\#f8f9ff\],
+[data-theme="dark"] .bg-\[\#0b1c30\],
+.dark .bg-\[\#0b1c30\] {
+  background-color: #0B0F17 !important;
+}
+
+[data-theme="dark"] .bg-\[\#eff4ff\],
+.dark .bg-\[\#eff4ff\],
+[data-theme="dark"] .bg-\[\#e5eeff\],
+.dark .bg-\[\#e5eeff\],
+[data-theme="dark"] .bg-\[\#132238\],
+.dark .bg-\[\#132238\] {
+  background-color: #1E293B !important;
+}
+
+[data-theme="dark"] .border-line,
+.dark .border-line,
+[data-theme="dark"] .border-\[\#e5eeff\],
+.dark .border-\[\#e5eeff\] {
+  border-color: #263347 !important;
 }
 
 /* ─── Base Reset & Typography ─────────────────────────────────── */
@@ -53,7 +85,7 @@ html {
 }
 
 body {
-  font-family: var(--font-inter, "Plus Jakarta Sans", system-ui, sans-serif);
+  font-family: var(--font-worksans, var(--font-inter, "Plus Jakarta Sans", system-ui, sans-serif));
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-text);
@@ -61,6 +93,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ─── Focus Management ────────────────────────────────────────── */
@@ -106,12 +154,29 @@ p {
 p:last-child { margin-bottom: 0; }
 
 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.12s ease, opacity 0.12s ease;
+}
+
+.prose-read a {
   color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: color 0.12s ease, opacity 0.12s ease;
 }
-a:hover { color: var(--color-primary-hover); }
+.prose-read a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Button & primary link text color safeguard: text remains white on hover */
+.bg-primary,
+.bg-primary:hover,
+a.bg-primary,
+a.bg-primary:hover,
+button.bg-primary,
+button.bg-primary:hover {
+  color: #ffffff !important;
+}
 
 /* ─── Reading Column ──────────────────────────────────────────── */
 .prose-read {

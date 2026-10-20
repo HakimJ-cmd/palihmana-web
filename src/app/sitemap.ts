@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
-import { SITE_CONFIG, PILAR_SLUGS } from "@/lib/constants";
-import { getLatestArticles } from "@/modules/articles/queries";
+import { SITE_CONFIG } from "@/lib/constants";
+import { getLatestArticles, getAllTags } from "@/modules/articles/queries";
+import { getUtilities } from "@/modules/utilities/queries";
+import { getUpcomingEvents } from "@/modules/events/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE_CONFIG.url;
@@ -14,9 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/discover",
     "/people",
     "/catatan-lapangan",
+    "/layanan",
     "/kalender",
     "/simpanan",
     "/cari",
+    "/masuk",
+    "/daftar",
     "/tentang",
     "/pedoman-editorial",
     "/kebijakan-koreksi",
@@ -41,5 +46,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  return [...staticRoutes, ...articleRoutes];
+  // Utility routes
+  const utilities = await getUtilities();
+  const utilityRoutes = utilities.map((u) => ({
+    url: `${baseUrl}/layanan/${u.slug}`,
+    lastModified: u.lastVerifiedAt || new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  // Event routes
+  const events = await getUpcomingEvents();
+  const eventRoutes = events.map((e) => ({
+    url: `${baseUrl}/kalender/${e.slug}`,
+    lastModified: new Date(e.eventDate),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  // Tag routes
+  const tags = await getAllTags();
+  const tagRoutes = tags.map((t) => ({
+    url: `${baseUrl}/tag/${t.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...articleRoutes,
+    ...utilityRoutes,
+    ...eventRoutes,
+    ...tagRoutes,
+  ];
 }

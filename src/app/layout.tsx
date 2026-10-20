@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import { Inter, Newsreader, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/nav/Header";
 import { Footer } from "@/components/nav/Footer";
@@ -9,6 +9,12 @@ import { SITE_CONFIG } from "@/lib/constants";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  variable: "--font-worksans",
   display: "swap",
 });
 
@@ -68,10 +74,16 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${inter.variable} ${newsreader.variable}`}
+      className={`${inter.variable} ${workSans.variable} ${newsreader.variable}`}
       suppressHydrationWarning
     >
-      <body>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+      </head>
+      <body className="font-sans antialiased text-ink bg-bg">
         <ThemeProvider>
           <a href="#main-content" className="skip-link">
             Lewati ke konten utama
