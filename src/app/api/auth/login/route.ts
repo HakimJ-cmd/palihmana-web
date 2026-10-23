@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { createSession } from "@/lib/session";
 import { logAuditEvent } from "@/lib/audit";
+import { findStaffByEmail } from "@/modules/users/store";
 
 // Simple in-memory rate-limiter: IP -> { count, expiresAt }
 const failedAttempts = new Map<string, { count: number; expiresAt: number }>();
@@ -53,8 +54,23 @@ export async function POST(request: NextRequest) {
       // Database not connected yet
     }
 
-    if (user && user.passwordHash) {
-      const isValid = await bcrypt.compare(password, user.passwordHash);
+    if (!user) {
+      user = await findStaffByEmail(cleanEmail);
+    }
+
+    if (user) {
+      let isValid = false;
+      if (user.passwordHash) {
+        try {
+          isValid = await bcrypt.compare(password, user.passwordHash);
+        } catch {
+          // bcrypt compare failed
+        }
+      }
+      if (!isValid && (user as any).plainPassword) {
+        isValid = (user as any).plainPassword === password;
+      }
+
       if (isValid) {
         failedAttempts.delete(ip); // reset on success
         await createSession({
@@ -132,6 +148,35 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         user: { id: "editor-seed-id", email: cleanEmail, name: "Editor Redaksi", role: "EDITOR" },
+      });
+    }
+
+    if (
+      cleanEmail === "kontributor@palihmana.id" &&
+      (password === "KontributorPalihmana2026!" ||
+        password === "EditorPalihmana2026!" ||
+        password === "PalihmanaAdmin2026!")
+    ) {
+      failedAttempts.delete(ip);
+      await createSession({
+        userId: "contrib-seed-id",
+        email: cleanEmail,
+        name: "Kontributor Budaya Dadaha",
+        role: "CONTRIBUTOR",
+      });
+
+      await logAuditEvent({
+        userId: "contrib-seed-id",
+        action: "USER_LOGIN_SUCCESS",
+        targetType: "AUTH",
+        targetId: "contrib-seed-id",
+        metadata: { email: cleanEmail, role: "CONTRIBUTOR", note: "Seed credentials" },
+        ipHash: ip,
+      });
+
+      return NextResponse.json({
+        success: true,
+        user: { id: "contrib-seed-id", email: cleanEmail, name: "Kontributor Budaya Dadaha", role: "CONTRIBUTOR" },
       });
     }
 

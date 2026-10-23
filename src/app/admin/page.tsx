@@ -120,6 +120,12 @@ export default async function AdminDashboardPage() {
             Kalender Acara
           </Link>
           <Link
+            href="/admin/users"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-semibold text-ink hover:bg-surface-alt transition-colors"
+          >
+            Staf & Kontributor
+          </Link>
+          <Link
             href="/admin/articles/create"
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-white hover:bg-primary-hover transition-colors shadow-xs"
           >

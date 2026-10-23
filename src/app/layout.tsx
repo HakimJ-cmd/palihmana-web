@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader, Work_Sans } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 import { Header } from "@/components/nav/Header";
 import { Footer } from "@/components/nav/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { NavigationProgressBar } from "@/components/ui/NavigationProgressBar";
+import { StaffSecretShortcut } from "@/components/auth/StaffSecretShortcut";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const inter = Inter({
@@ -77,14 +80,11 @@ export default function RootLayout({
       className={`${inter.variable} ${workSans.variable} ${newsreader.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-        />
-      </head>
       <body className="font-sans antialiased text-ink bg-bg">
         <ThemeProvider>
+          <Suspense fallback={null}>
+            <NavigationProgressBar />
+          </Suspense>
           <a href="#main-content" className="skip-link">
             Lewati ke konten utama
           </a>
@@ -93,6 +93,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <StaffSecretShortcut />
         </ThemeProvider>
       </body>
     </html>

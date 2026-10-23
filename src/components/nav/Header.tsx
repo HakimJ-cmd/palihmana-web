@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Search, Menu, X, Sun, Moon, Bookmark, Calendar, CloudSun, Megaphone, Sparkles, BookOpen, User } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { PILAR_SLUGS, PILAR_LABELS, SITE_CONFIG } from "@/lib/constants";
 
 const PILAR_NAV = [
@@ -71,9 +72,9 @@ export function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] dark:bg-[#132238] dark:shadow-none border-b border-line/80">
+    <header className="sticky top-0 z-50 w-full bg-surface shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:bg-[#0E2226] border-b border-line/80">
       {/* ─── Top Utility Bar ────────────────────────────────────────── */}
-      <div className="w-full bg-[#f8f9ff] dark:bg-[#0b1c30] border-b border-[#e5eeff] dark:border-[#1E314B] px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-[#F0F7F5] dark:bg-[#071518] border-b border-line/60 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto h-9 flex items-center justify-between text-[11px] sm:text-xs text-ink-muted">
           {/* Left: Date & Weather */}
           <div className="flex items-center gap-3">
@@ -121,9 +122,9 @@ export function Header() {
       </div>
 
       {/* ─── Middle Brand & Search Bar ─────────────────────────────── */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-3 bg-white dark:bg-[#132238]">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-3 bg-surface dark:bg-[#0E2226]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 lg:gap-8">
-          {/* Mobile Menu Button + Brand Logo */}
+          {/* Mobile Menu Button + Official Brand Logo */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
@@ -134,15 +135,7 @@ export function Header() {
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
 
-            <Link href="/" className="flex flex-col">
-              <div className="flex items-baseline gap-1 font-serif text-2xl sm:text-3xl font-extrabold tracking-tight text-primary leading-none">
-                <span>PALIHMANA</span>
-                <span className="text-ink dark:text-white font-light text-xl sm:text-2xl">.ID</span>
-              </div>
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-ink-muted font-semibold mt-1">
-                Suara & Inspirasi Tatar Pasundan
-              </span>
-            </Link>
+            <BrandLogo size="md" />
           </div>
 
           {/* Search Box Desktop */}
@@ -152,8 +145,8 @@ export function Header() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari berita daerah, regulasi, investigasi, atau topik hangat..."
-                className="w-full bg-[#eff4ff] dark:bg-[#0b1c30] text-xs sm:text-sm text-ink placeholder-ink-muted/70 pl-4 pr-24 py-2 rounded-lg border border-[#e5eeff] dark:border-[#2C3E55] focus:outline-none focus:border-primary"
+                placeholder="Cari panduan warga, regulasi, data publik, atau info lokal..."
+                className="w-full bg-[#F0F7F5] dark:bg-[#071518] text-xs sm:text-sm text-ink placeholder-ink-muted/70 pl-4 pr-24 py-2 rounded-lg border border-line focus:outline-none focus:border-primary"
               />
               <button
                 type="submit"
@@ -216,16 +209,17 @@ export function Header() {
         </div>
       </div>
 
-      {/* ─── Bottom Navigation Bar (Dark Navy Inverse Surface) ─────── */}
-      <div className="w-full bg-[#213145] text-[#eaf1ff] px-4 sm:px-6 lg:px-8 border-b-2 border-primary">
+      {/* ─── Bottom Navigation Bar (Dark Teal Inverse Surface) ─────── */}
+      <div className="w-full bg-[#0C2326] text-[#E6F4F1] px-4 sm:px-6 lg:px-8 border-b-2 border-primary">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <nav className="flex items-center overflow-x-auto py-0 no-scrollbar" aria-label="Navigasi Kategori">
             <Link
               href="/"
+              prefetch={true}
               className={`px-3.5 py-2.5 text-xs sm:text-sm transition-colors whitespace-nowrap font-medium ${
                 pathname === "/"
                   ? "bg-primary text-white font-bold"
-                  : "text-[#eaf1ff]/90 hover:bg-white/10 hover:text-white"
+                  : "text-[#E6F4F1]/90 hover:bg-white/10 hover:text-white"
               }`}
             >
               Beranda
@@ -237,10 +231,11 @@ export function Header() {
                 <Link
                   key={p.slug}
                   href={href}
+                  prefetch={true}
                   className={`px-3.5 py-2.5 text-xs sm:text-sm transition-colors whitespace-nowrap font-medium ${
                     isActive
                       ? "bg-primary text-white font-bold"
-                      : "text-[#eaf1ff]/90 hover:bg-white/10 hover:text-white"
+                      : "text-[#E6F4F1]/90 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   {p.label}
@@ -261,7 +256,7 @@ export function Header() {
       {/* ─── Mobile Menu Drawer ──────────────────────────────────────── */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[110px] z-50 bg-black/50 backdrop-blur-xs lg:hidden">
-          <div className="flex h-full w-full max-w-xs flex-col border-r border-line bg-white dark:bg-[#132238] p-5 shadow-2xl overflow-y-auto">
+          <div className="flex h-full w-full max-w-xs flex-col border-r border-line bg-surface dark:bg-[#0E2226] p-5 shadow-2xl overflow-y-auto">
             {/* Search form mobile */}
             <form onSubmit={handleSearch} className="mb-4">
               <div className="relative">
@@ -269,8 +264,8 @@ export function Header() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Cari berita atau pilar..."
-                  className="w-full rounded-lg border border-line bg-[#eff4ff] dark:bg-[#0b1c30] px-3 py-2 text-xs text-ink placeholder-ink-muted focus:outline-none focus:border-primary"
+                  placeholder="Cari panduan atau berita..."
+                  className="w-full rounded-lg border border-line bg-[#F0F7F5] dark:bg-[#071518] px-3 py-2 text-xs text-ink placeholder-ink-muted focus:outline-none focus:border-primary"
                 />
                 <button
                   type="submit"
@@ -284,6 +279,7 @@ export function Header() {
             <nav className="flex flex-col gap-1 text-sm font-medium text-ink">
               <Link
                 href="/"
+                prefetch={true}
                 className={`rounded-lg px-3 py-2 transition-colors ${
                   pathname === "/" ? "bg-primary text-white font-bold" : "hover:bg-surface-alt"
                 }`}
@@ -301,6 +297,7 @@ export function Header() {
                   <Link
                     key={p.slug}
                     href={href}
+                    prefetch={true}
                     className={`rounded-lg px-3 py-2 transition-colors ${
                       isActive ? "bg-primary text-white font-bold" : "hover:bg-surface-alt"
                     }`}
@@ -341,9 +338,8 @@ export function Header() {
               </Link>
             </nav>
 
-            <div className="mt-auto border-t border-line pt-4 text-xs text-ink-muted">
-              <p className="font-serif font-bold text-ink">PALIHMANA.ID</p>
-              <p className="mt-0.5 text-[11px]">Jurnalisme Presisi & Solutif Tatar Pasundan</p>
+            <div className="mt-auto border-t border-line pt-4">
+              <BrandLogo size="sm" showTagline={true} />
             </div>
           </div>
         </div>

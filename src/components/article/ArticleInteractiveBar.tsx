@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Volume2, VolumeX, Play, Pause, Bookmark, Share2, Copy, Check, MessageSquare } from "lucide-react";
+import { Volume2, VolumeX, Play, Pause, Bookmark, Share2, Copy, Check, MessageSquare, ShieldCheck } from "lucide-react";
 import { BookmarkButton } from "@/components/article/BookmarkButton";
 import { ArticleItem } from "@/types";
 import { sanitizeText } from "@/lib/sanitize";
@@ -168,7 +168,7 @@ export function ReaderReactions() {
   ];
 
   return (
-    <div className="bg-[#eff4ff] dark:bg-[#132238] p-5 sm:p-6 rounded-xl border border-line/80 my-8">
+    <div className="bg-[#F0F7F5] dark:bg-[#071518] p-5 sm:p-6 rounded-xl border border-line/80 my-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-serif text-xs font-bold uppercase tracking-wider text-ink">
           Bagaimana Reaksi Anda Terhadap Liputan Ini?
@@ -227,7 +227,7 @@ export function ReaderCommentsSection() {
       </div>
 
       {/* New Comment Form */}
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-[#132238] border border-line p-4 rounded-xl flex flex-col gap-3 shadow-xs">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0E2226] border border-line p-4 rounded-xl flex flex-col gap-3 shadow-xs">
         <div className="flex items-center gap-2 text-xs">
           <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center font-bold text-[11px]">
             W
@@ -240,12 +240,12 @@ export function ReaderCommentsSection() {
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Sampaikan pandangan Anda dengan santun, faktual, dan beretika..."
-          className="w-full bg-[#eff4ff] dark:bg-[#0b1c30] text-ink p-3 rounded-lg border border-line text-xs sm:text-sm focus:outline-none focus:border-primary resize-none"
+          className="w-full bg-[#F0F7F5] dark:bg-[#071518] text-ink p-3 rounded-lg border border-line text-xs sm:text-sm focus:outline-none focus:border-primary resize-none"
         />
 
         <div className="flex items-center justify-between">
-          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
-            <span className="material-symbols-outlined text-[15px]">verified_user</span>
+          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5">
+            <ShieldCheck className="h-4 w-4 shrink-0" />
             Moderasi Redaksi Aktif
           </span>
           <button
@@ -265,7 +265,7 @@ export function ReaderCommentsSection() {
 
       {/* Thread List */}
       <div className="flex flex-col gap-3 mt-2">
-        <div className="p-4 bg-white dark:bg-[#132238] border border-line rounded-xl flex flex-col gap-2">
+        <div className="p-4 bg-white dark:bg-[#0E2226] border border-line rounded-xl flex flex-col gap-2">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
               <span className="font-bold text-ink">Kang Hendra Suganda</span>
@@ -278,7 +278,7 @@ export function ReaderCommentsSection() {
           </p>
         </div>
 
-        <div className="p-4 bg-white dark:bg-[#132238] border border-line rounded-xl flex flex-col gap-2">
+        <div className="p-4 bg-white dark:bg-[#0E2226] border border-line rounded-xl flex flex-col gap-2">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
               <span className="font-bold text-ink">Dra. Nining Nurhayati</span>

@@ -65,9 +65,9 @@ export default function EventsCalendarPage() {
   ];
 
   return (
-    <div className="w-full bg-[#f8f9ff] dark:bg-[#0b1c30] min-h-screen">
+    <div className="w-full bg-bg min-h-screen">
       {/* ─── Breadcrumb ─────────────────────────────────────────────── */}
-      <section className="w-full bg-white dark:bg-[#132238] py-2.5 px-4 sm:px-6 lg:px-8 border-b border-line">
+      <section className="w-full bg-white dark:bg-[#0E2226] py-2.5 px-4 sm:px-6 lg:px-8 border-b border-line">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-ink-muted">
           <nav className="flex items-center gap-1.5">
             <Link href="/" className="hover:text-primary transition-colors">
@@ -83,7 +83,7 @@ export default function EventsCalendarPage() {
       </section>
 
       {/* ─── Section 1: Page Header & Search Bar ─────────────────────── */}
-      <section className="w-full bg-white dark:bg-[#132238] shadow-xs border-b border-line">
+      <section className="w-full bg-white dark:bg-[#0E2226] shadow-xs border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6">
             <div className="max-w-3xl">
@@ -121,7 +121,7 @@ export default function EventsCalendarPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Cari festival, pameran UMKM, lokasi kota, nama penampil..."
-                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#132238] text-xs sm:text-sm text-ink placeholder:text-ink-muted rounded-lg border border-line focus:outline-none focus:border-primary shadow-xs"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#0E2226] text-xs sm:text-sm text-ink placeholder:text-ink-muted rounded-lg border border-line focus:outline-none focus:border-primary shadow-xs"
                 />
               </div>
 
@@ -130,7 +130,7 @@ export default function EventsCalendarPage() {
                 <select
                   value={selectedRegion}
                   onChange={(e) => setSelectedRegion(e.target.value)}
-                  className="w-full pl-10 pr-8 py-2.5 bg-white dark:bg-[#132238] text-xs sm:text-sm text-ink rounded-lg border border-line focus:outline-none focus:border-primary appearance-none cursor-pointer shadow-xs"
+                  className="w-full pl-10 pr-8 py-2.5 bg-white dark:bg-[#0E2226] text-xs sm:text-sm text-ink rounded-lg border border-line focus:outline-none focus:border-primary appearance-none cursor-pointer shadow-xs"
                 >
                   <option value="all">Semua Wilayah Jawa Barat</option>
                   <option value="tasik">Kota & Kab. Tasikmalaya (Priangan Timur)</option>
@@ -142,7 +142,7 @@ export default function EventsCalendarPage() {
               </div>
 
               <div className="md:col-span-3 flex items-center gap-2">
-                <div className="inline-flex rounded-lg border border-line bg-white dark:bg-[#132238] p-1 w-full justify-between text-xs font-semibold">
+                <div className="inline-flex rounded-lg border border-line bg-white dark:bg-[#0E2226] p-1 w-full justify-between text-xs font-semibold">
                   <button
                     type="button"
                     onClick={() => setSelectedPrice("ALL")}
@@ -178,7 +178,7 @@ export default function EventsCalendarPage() {
       </section>
 
       {/* ─── Section 2: Category Pills & Weekly Date Rail Strip ──────── */}
-      <section className="w-full bg-[#f8f9ff] dark:bg-[#0b1c30] py-4 border-b border-line">
+      <section className="w-full bg-bg py-4 border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto pb-3 no-scrollbar text-xs">
             {categories.map((c) => (
@@ -189,7 +189,7 @@ export default function EventsCalendarPage() {
                 className={`px-4 py-2 rounded-full font-semibold whitespace-nowrap transition-colors shadow-xs ${
                   selectedCategory === c.id
                     ? "bg-primary text-white"
-                    : "bg-white dark:bg-[#132238] border border-line text-ink hover:bg-surface-alt"
+                    : "bg-white dark:bg-[#0E2226] border border-line text-ink hover:bg-surface-alt"
                 }`}
               >
                 {c.label}
@@ -209,7 +209,7 @@ export default function EventsCalendarPage() {
                   className={`p-2.5 rounded-xl text-center flex flex-col items-center transition-all ${
                     isActive
                       ? "bg-primary text-white shadow-md ring-2 ring-primary/30"
-                      : "bg-white dark:bg-[#132238] border border-line text-ink hover:border-primary/50"
+                      : "bg-white dark:bg-[#0E2226] border border-line text-ink hover:border-primary/50"
                   }`}
                 >
                   <span className={`text-[10px] font-bold ${isActive ? "text-white/80" : "text-ink-muted"}`}>
@@ -232,7 +232,7 @@ export default function EventsCalendarPage() {
       <section className="w-full py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="bg-white dark:bg-[#132238] rounded-2xl shadow-md border border-line overflow-hidden mb-10">
+          <div className="bg-white dark:bg-[#0E2226] rounded-2xl shadow-md border border-line overflow-hidden mb-10">
             <div className="grid grid-cols-1 lg:grid-cols-12">
               {/* Spotlight Image */}
               <div className="lg:col-span-7 relative min-h-[300px] lg:min-h-[380px] bg-black">
@@ -331,7 +331,7 @@ export default function EventsCalendarPage() {
               return (
                 <article
                   key={evt.id}
-                  className="bg-white dark:bg-[#132238] rounded-xl border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between overflow-hidden group"
+                  className="bg-white dark:bg-[#0E2226] rounded-xl border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between overflow-hidden group"
                 >
                   <div className="p-5">
                     <div className="flex items-start gap-4">
@@ -390,7 +390,7 @@ export default function EventsCalendarPage() {
                     <div className="flex items-center gap-2">
                       <Link
                         href={`/kalender/${evt.slug}`}
-                        className="px-3 py-1.5 rounded-lg border border-line bg-white dark:bg-[#132238] text-xs font-semibold text-ink hover:text-primary transition-colors flex items-center gap-1"
+                        className="px-3 py-1.5 rounded-lg border border-line bg-white dark:bg-[#0E2226] text-xs font-semibold text-ink hover:text-primary transition-colors flex items-center gap-1"
                       >
                         Detail
                       </Link>
@@ -398,7 +398,7 @@ export default function EventsCalendarPage() {
                         href={`/api/events/${evt.id || evt.slug}/ics`}
                         download
                         title="Simpan ke Google / Apple Calendar"
-                        className="px-2.5 py-1.5 rounded-lg border border-line bg-white dark:bg-[#132238] text-xs font-semibold text-ink hover:text-primary transition-colors flex items-center gap-1"
+                        className="px-2.5 py-1.5 rounded-lg border border-line bg-white dark:bg-[#0E2226] text-xs font-semibold text-ink hover:text-primary transition-colors flex items-center gap-1"
                       >
                         + .ICS
                       </a>
@@ -426,7 +426,7 @@ export default function EventsCalendarPage() {
       {/* ─── Modal Submit Agenda ─────────────────────────────────────── */}
       {isSubmitModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#132238] border border-line rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
+          <div className="bg-white dark:bg-[#0E2226] border border-line rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
             <button
               type="button"
               onClick={() => {

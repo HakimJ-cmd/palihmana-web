@@ -2,12 +2,12 @@ import { Pilar, GeoScope, ArticleStatus, UtilityCategory, PriceType, EventStatus
 
 // ─── Pilar labels ───────────────────────────────────────────────
 export const PILAR_LABELS: Record<Pilar, string> = {
-  UTILITY: "Utility",
-  UNDERSTAND: "Understand",
-  OPINION: "Opini",
-  DISCOVER: "Discover",
-  PEOPLE: "People",
-  FIELD_NOTES: "Catatan Lapangan",
+  UTILITY: "Utility & Panduan Warga",
+  UNDERSTAND: "Understand & Analisis Data",
+  OPINION: "Kolom Opini & Wacana",
+  DISCOVER: "Budaya & Kuliner (Discover)",
+  PEOPLE: "Sosok & Tokoh (People)",
+  FIELD_NOTES: "Catatan Lapangan & Sketsa",
 };
 
 export const PILAR_SLUGS: Record<Pilar, string> = {

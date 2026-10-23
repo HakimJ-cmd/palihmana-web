@@ -3,22 +3,20 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { MapPin, Mail, Phone, CheckCircle2, ShieldCheck, Newspaper } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SITE_CONFIG } from "@/lib/constants";
+import { SecretTriggerCopyright } from "@/components/auth/SecretTriggerCopyright";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#213145] text-[#eaf1ff] pt-12 sm:pt-16 pb-8 border-t-4 border-primary mt-16 sm:mt-24 transition-colors">
+    <footer className="w-full bg-[#0C2326] text-[#E6F4F1] pt-12 sm:pt-16 pb-8 border-t-4 border-primary mt-16 sm:mt-24 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Col 1 & 2: Brand, Identity & Contacts */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">
-                PALIHMANA<span className="text-primary">.ID</span>
-              </span>
-            </Link>
+            <BrandLogo size="md" />
             <p className="text-xs sm:text-sm text-[#bec6e0] leading-relaxed pr-0 lg:pr-6">
-              Portal berita jurnalisme presisi dan media digital independen yang berakar pada dinamika Tasikmalaya, Priangan Timur, dan Tatar Pasundan. Menghadirkan liputan solutif, kabar civic, denyut ekonomi UMKM, dan perayaan khazanah budaya dengan integritas redaksional tertinggi.
+              Media independen solutif dan panduan warga yang berakar pada dinamika Tasikmalaya, Priangan Timur, dan Tatar Pasundan. Menghadirkan informasi terverifikasi, kabar kewargaan, denyut ekonomi UMKM, dan perayaan khazanah lokal dengan integritas redaksional tertinggi.
             </p>
 
             <div className="flex flex-col gap-2 text-xs text-[#bec6e0] mt-1">
@@ -167,7 +165,7 @@ export function Footer() {
         {/* Bottom Bar: Copyright & Standards */}
         <div className="border-t border-white/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#bec6e0] text-xs">
           <div>
-            © {new Date().getFullYear()} PT Palih Mana Multimedia Nusantara. Hak cipta dilindungi Undang-Undang.
+            <SecretTriggerCopyright />
           </div>
           <div className="flex items-center gap-4 text-[11px]">
             <Link href="/pedoman-editorial" className="hover:text-white transition-colors">
@@ -180,10 +178,6 @@ export function Footer() {
             <span>•</span>
             <Link href="/sitemap.xml" className="hover:text-white transition-colors">
               Sitemap RSS
-            </Link>
-            <span>•</span>
-            <Link href="/admin" className="opacity-40 hover:opacity-100 hover:text-white transition-opacity" title="Akses Redaksi Internal">
-              Akses Staf
             </Link>
           </div>
         </div>

@@ -253,7 +253,7 @@ export default function CreateArticlePage() {
         </div>
 
         {/* FACT CHECK & VERIFICATION LOGGER (PRD F4-CMS-02 & F4-CMS-03) */}
-        <div className="rounded border border-primary/30 bg-[#eff4ff] dark:bg-[#132238] p-6 space-y-4">
+        <div className="rounded border border-primary/30 bg-[#F0F7F5] dark:bg-[#0E2226] p-6 space-y-4">
           <div className="flex items-center gap-2 text-primary border-b border-primary/20 pb-3">
             <ShieldCheck className="h-5 w-5" />
             <h2 className="font-serif text-base font-bold text-ink">

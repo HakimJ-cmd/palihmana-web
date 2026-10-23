@@ -54,13 +54,20 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Protect /admin routes (except /admin/login)
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+  // Redirect old /admin/login route to /redaksi portal
+  if (pathname === "/admin/login") {
+    if (isValidSession) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return NextResponse.redirect(new URL("/redaksi", request.url));
+  }
+
+  // Protect /admin routes
+  if (pathname.startsWith("/admin")) {
     if (!isValidSession) {
-      const loginUrl = new URL("/admin/login", request.url);
+      const loginUrl = new URL("/redaksi", request.url);
       loginUrl.searchParams.set("from", pathname);
       const redirectRes = NextResponse.redirect(loginUrl);
-      // Clean up invalid session cookie if forged
       redirectRes.cookies.delete("palihmana_session");
       return redirectRes;
     }
@@ -82,8 +89,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // If already logged in as staff, redirect /admin/login to /admin dashboard
-  if (pathname === "/admin/login" && isValidSession) {
+  // If already logged in as staff, redirect /redaksi to /admin dashboard
+  if (pathname === "/redaksi" && isValidSession) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
 

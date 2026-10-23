@@ -151,6 +151,16 @@ export default function AdminLoginPage() {
                   Gunakan
                 </button>
               </div>
+              <div className="flex items-center justify-between">
+                <span>kontributor@palihmana.id</span>
+                <button
+                  type="button"
+                  onClick={() => handleFillDemo("kontributor@palihmana.id", "KontributorPalihmana2026!")}
+                  className="text-primary hover:underline font-sans font-semibold"
+                >
+                  Gunakan
+                </button>
+              </div>
             </div>
           </div>
         </div>

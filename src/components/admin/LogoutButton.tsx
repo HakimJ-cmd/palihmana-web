@@ -12,8 +12,8 @@ export function LogoutButton() {
     setLoading(true);
     try {
       await fetch("/api/auth/logout", { method: "POST" });
-      router.push("/admin/login");
-      router.refresh();
+      window.location.href = "/";
+      return;
     } catch (e) {
       console.error("Logout failed:", e);
     } finally {

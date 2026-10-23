@@ -119,11 +119,21 @@ function LoginForm() {
         </button>
       </form>
 
-      <div className="border-t border-line pt-4 text-center text-xs text-ink-muted">
-        Belum memiliki akun?{" "}
-        <Link href="/daftar" className="font-semibold text-primary hover:underline">
-          Daftar sebagai Baraya
-        </Link>
+      <div className="border-t border-line pt-4 text-center text-xs text-ink-muted space-y-2">
+        <div>
+          Belum memiliki akun?{" "}
+          <Link href="/daftar" className="font-semibold text-primary hover:underline">
+            Daftar sebagai Baraya
+          </Link>
+        </div>
+        <div className="pt-2 border-t border-line/60">
+          <Link
+            href="/redaksi"
+            className="text-[11px] font-medium text-ink-muted hover:text-primary transition-colors inline-flex items-center gap-1"
+          >
+            Akses Redaksi & Kontributor Warga →
+          </Link>
+        </div>
       </div>
     </div>
   );

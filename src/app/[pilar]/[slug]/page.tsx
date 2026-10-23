@@ -115,7 +115,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="w-full bg-[#f8f9ff] dark:bg-[#0b1c30] min-h-screen">
+    <div className="w-full bg-bg min-h-screen">
       {/* Schema.org NewsArticle */}
       <script
         type="application/ld+json"
@@ -123,7 +123,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       />
 
       {/* ─── Breadcrumb & Classification Bar ─────────────────────────── */}
-      <section className="w-full bg-white dark:bg-[#132238] py-2.5 px-4 sm:px-6 lg:px-8 border-b border-line">
+      <section className="w-full bg-white dark:bg-[#0E2226] py-2.5 px-4 sm:px-6 lg:px-8 border-b border-line">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-ink-muted">
           <nav className="flex items-center flex-wrap gap-1.5">
             <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
@@ -273,7 +273,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
             {/* Key Takeaways Box (Inti Berita & Poin Kunci) */}
             {article.summaryPoints && article.summaryPoints.length > 0 && (
-              <div className="bg-[#eff4ff] dark:bg-[#132238] border-l-4 border-primary p-5 sm:p-6 rounded-r-xl shadow-xs">
+              <div className="bg-[#F0F7F5] dark:bg-[#071518] border-l-4 border-primary p-5 sm:p-6 rounded-r-xl shadow-xs">
                 <div className="flex items-center gap-2 mb-3 text-primary text-xs sm:text-sm font-bold tracking-wide uppercase">
                   <FileCheck className="h-4 w-4" />
                   <span>Inti Berita & Poin Kunci</span>
@@ -306,7 +306,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               <ArticleContent contentJson={typeof article.bodyJson === "string" ? article.bodyJson : JSON.stringify(article.bodyJson)} />
 
               {/* Editorial Pull Quote */}
-              <blockquote className="my-6 p-6 bg-[#eff4ff] dark:bg-[#132238] rounded-xl border-l-4 border-primary relative overflow-hidden shadow-xs">
+              <blockquote className="my-6 p-6 bg-[#F0F7F5] dark:bg-[#071518] rounded-xl border-l-4 border-primary relative overflow-hidden shadow-xs">
                 <Quote className="h-16 w-16 text-primary/10 absolute -right-2 -bottom-4 pointer-events-none" />
                 <p className="font-serif text-base sm:text-lg italic font-semibold text-ink leading-snug relative z-10 mb-2">
                   &ldquo;Kami tidak sekadar melaporkan peristiwa, melainkan menyajikan fakta teruji, panduan yang berguna, dan ruang suara jujur bagi warga Tatar Pasundan.&rdquo;
@@ -326,7 +326,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
                   <Link
                     key={idx}
                     href={`/cari?q=${encodeURIComponent(t.tag?.name || t.name)}`}
-                    className="px-3 py-1 rounded-lg bg-white dark:bg-[#132238] border border-line hover:bg-primary hover:text-white font-medium transition-colors"
+                    className="px-3 py-1 rounded-lg bg-white dark:bg-[#0E2226] border border-line hover:bg-primary hover:text-white font-medium transition-colors"
                   >
                     #{t.tag?.name || t.name}
                   </Link>
@@ -346,7 +346,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
           <aside className="lg:col-span-4 flex flex-col gap-6">
             
             {/* Journalist Bio Widget */}
-            <div className="bg-white dark:bg-[#132238] border border-line p-5 rounded-xl shadow-xs">
+            <div className="bg-white dark:bg-[#0E2226] border border-line p-5 rounded-xl shadow-xs">
               <div className="flex items-start gap-3">
                 <div className="w-14 h-14 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0 text-xl font-serif">
                   {article.author?.name ? article.author.name.charAt(0) : "P"}
@@ -374,7 +374,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             </div>
 
             {/* Berita Terpopuler Hari Ini */}
-            <div className="bg-white dark:bg-[#132238] border border-line rounded-xl p-5 shadow-xs">
+            <div className="bg-white dark:bg-[#0E2226] border border-line rounded-xl p-5 shadow-xs">
               <div className="flex items-center justify-between border-b-2 border-primary pb-2 mb-3">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-primary" />
@@ -412,7 +412,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             </div>
 
             {/* Agenda Pekan Ini */}
-            <div className="bg-white dark:bg-[#132238] border border-line rounded-xl p-5 shadow-xs">
+            <div className="bg-white dark:bg-[#0E2226] border border-line rounded-xl p-5 shadow-xs">
               <div className="flex items-center justify-between border-b-2 border-primary pb-2 mb-3">
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="h-4 w-4 text-primary" />
@@ -485,7 +485,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       </article>
 
       {/* ─── Rekomendasi Berita Terkait Lainnya (Bottom Grid) ─────────── */}
-      <section className="w-full bg-[#eff4ff] dark:bg-[#132238] border-t border-line py-10 sm:py-12 px-4 sm:px-6 lg:px-8 mt-12">
+      <section className="w-full bg-[#F0F7F5] dark:bg-[#071518] border-t border-line py-10 sm:py-12 px-4 sm:px-6 lg:px-8 mt-12">
         <div className="max-w-7xl mx-auto flex flex-col gap-6">
           <div className="flex items-center justify-between border-b-2 border-primary pb-2">
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-ink">

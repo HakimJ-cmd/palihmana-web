@@ -5,6 +5,7 @@ import { getUpcomingEvents } from "@/modules/events/queries";
 import { formatDateShort } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { getSession } from "@/lib/session";
+import { EventsManager } from "@/components/admin/EventsManager";
 
 export const metadata = {
   title: "Kelola Agenda Acara & Kalender — Admin Palihmana",
@@ -48,72 +49,8 @@ export default async function AdminEventsPage() {
         </Link>
       </div>
 
-      {/* Events Table */}
-      <div className="rounded-xl border border-line bg-surface overflow-hidden shadow-xs">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-line bg-surface-alt font-sans text-ink-muted uppercase tracking-wider">
-              <tr>
-                <th className="px-6 py-3 font-semibold">Nama Acara</th>
-                <th className="px-6 py-3 font-semibold">Tanggal</th>
-                <th className="px-6 py-3 font-semibold">Lokasi</th>
-                <th className="px-6 py-3 font-semibold">Penyelenggara</th>
-                <th className="px-6 py-3 font-semibold">Status Tiket</th>
-                <th className="px-6 py-3 font-semibold">Verifikasi</th>
-                <th className="px-6 py-3 text-right font-semibold">Aksi</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line/60">
-              {events.map((e) => {
-                const isFree = e.priceType === "FREE";
-
-                return (
-                  <tr key={e.id} className="hover:bg-surface-alt/50 transition-colors">
-                    <td className="px-6 py-4 font-serif text-sm font-semibold text-ink">
-                      <span className="line-clamp-1 max-w-sm">{e.title}</span>
-                    </td>
-                    <td className="px-6 py-4 font-mono text-ink tabular-nums">
-                      {formatDateShort(e.eventDate)}
-                    </td>
-                    <td className="px-6 py-4 text-ink-muted max-w-xs truncate">
-                      {e.location}
-                    </td>
-                    <td className="px-6 py-4 text-ink">
-                      {e.organizer}
-                    </td>
-                    <td className="px-6 py-4">
-                      <Badge variant={isFree ? "success" : "default"} size="sm">
-                        {isFree ? "Gratis" : "Berbayar"}
-                      </Badge>
-                    </td>
-                    <td className="px-6 py-4">
-                      {e.isVerified ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
-                          <CheckCircle2 className="h-3.5 w-3.5" />
-                          Terverifikasi
-                        </span>
-                      ) : (
-                        <span className="text-[11px] text-amber-600 font-medium">
-                          Belum Cek
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <Link
-                        href={`/kalender/${e.slug}`}
-                        target="_blank"
-                        className="font-bold text-primary hover:text-primary-hover hover:underline"
-                      >
-                        Lihat Detail
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Events Manager Component */}
+      <EventsManager initialEvents={events} />
     </div>
   );
 }

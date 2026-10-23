@@ -16,7 +16,8 @@ import {
   FileText, 
   HelpCircle,
   Megaphone,
-  CheckCircle2
+  CheckCircle2,
+  PenLine
 } from "lucide-react";
 import { getFeaturedArticle, getLatestArticles } from "@/modules/articles/queries";
 import { getUpcomingEvents } from "@/modules/events/queries";
@@ -40,7 +41,7 @@ export default async function HomePage() {
   const feedArticles = latestArticles.slice(1, 6);
 
   return (
-    <div className="w-full bg-[#f8f9ff] dark:bg-[#0b1c30] min-h-screen">
+    <div className="w-full bg-bg min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* ─── 1. BREAKING NEWS TICKER ─────────────────────────────────── */}
         <BreakingNewsTicker articles={latestArticles} />
@@ -63,7 +64,7 @@ export default async function HomePage() {
 
               {/* Featured Left Story */}
               {editorialPicks[0] && (
-                <article className="bg-white dark:bg-[#132238] rounded-xl overflow-hidden border border-line/80 shadow-xs hover:shadow-md transition-shadow group flex flex-col">
+                <article className="bg-white dark:bg-[#0E2226] rounded-xl overflow-hidden border border-line/80 shadow-xs hover:shadow-md transition-shadow group flex flex-col">
                   <Link 
                     href={`/${PILAR_SLUGS[editorialPicks[0].pilar] || "utility"}/${editorialPicks[0].slug}`}
                     className="relative w-full h-44 overflow-hidden bg-surface-alt block"
@@ -107,7 +108,7 @@ export default async function HomePage() {
               {/* Compact Stacked Items */}
               <div className="flex flex-col gap-3">
                 {editorialPicks.slice(1, 4).map((item) => (
-                  <article key={item.id} className="bg-white dark:bg-[#132238] rounded-xl p-3 border border-line/70 hover:bg-[#eff4ff] dark:hover:bg-[#1E314B] transition-colors shadow-xs flex items-start gap-3 group">
+                  <article key={item.id} className="bg-white dark:bg-[#0E2226] rounded-xl p-3 border border-line/70 hover:bg-[#eff4ff] dark:hover:bg-[#1E314B] transition-colors shadow-xs flex items-start gap-3 group">
                     <Link
                       href={`/${PILAR_SLUGS[item.pilar] || "utility"}/${item.slug}`}
                       className="w-20 h-16 rounded-lg overflow-hidden shrink-0 bg-surface-alt relative block"
@@ -205,7 +206,7 @@ export default async function HomePage() {
 
               {/* Sub-Lead Highlight Card */}
               {subLead && (
-                <article className="bg-white dark:bg-[#132238] rounded-xl p-4 border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-4 items-center group">
+                <article className="bg-white dark:bg-[#0E2226] rounded-xl p-4 border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-4 items-center group">
                   <div className="relative w-full sm:w-48 h-32 rounded-lg overflow-hidden shrink-0 bg-surface-alt">
                     <Image
                       src={subLead.coverImage || "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?q=80&w=400&auto=format&fit=crop"}
@@ -258,7 +259,7 @@ export default async function HomePage() {
               </div>
 
               {/* 5 Numbered Trending Items */}
-              <div className="bg-white dark:bg-[#132238] rounded-xl p-4 border border-line/80 shadow-xs flex flex-col gap-4">
+              <div className="bg-white dark:bg-[#0E2226] rounded-xl p-4 border border-line/80 shadow-xs flex flex-col gap-4">
                 {trendingArticles.map((art, idx) => (
                   <React.Fragment key={art.id}>
                     <article className="flex items-start gap-3 group">
@@ -333,7 +334,7 @@ export default async function HomePage() {
             {focusArticles.map((card, idx) => {
               const tags = ["EKONOMI & BISNIS", "TEKNOLOGI", "KULINER LOKAL", "KOMUNITAS"];
               return (
-                <article key={card.id} className="bg-white dark:bg-[#132238] rounded-xl overflow-hidden border border-line/80 shadow-xs hover:shadow-md transition-shadow group flex flex-col">
+                <article key={card.id} className="bg-white dark:bg-[#0E2226] rounded-xl overflow-hidden border border-line/80 shadow-xs hover:shadow-md transition-shadow group flex flex-col">
                   <Link 
                     href={`/${PILAR_SLUGS[card.pilar] || "utility"}/${card.slug}`}
                     className="relative w-full h-44 overflow-hidden bg-surface-alt block"
@@ -393,13 +394,13 @@ export default async function HomePage() {
                   <span className="px-3 py-1 rounded-lg bg-primary text-white font-semibold shrink-0">
                     Semua Wilayah
                   </span>
-                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#132238] border border-line text-ink font-medium shrink-0">
+                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#0E2226] border border-line text-ink font-medium shrink-0">
                     Tasikmalaya & Priangan
                   </span>
-                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#132238] border border-line text-ink font-medium shrink-0">
+                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#0E2226] border border-line text-ink font-medium shrink-0">
                     Bandung Raya
                   </span>
-                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#132238] border border-line text-ink font-medium shrink-0">
+                  <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#0E2226] border border-line text-ink font-medium shrink-0">
                     Pantai Selatan
                   </span>
                 </div>
@@ -408,7 +409,7 @@ export default async function HomePage() {
               {/* Feed List Items */}
               <div className="flex flex-col gap-4">
                 {feedArticles.map((row) => (
-                  <article key={row.id} className="bg-white dark:bg-[#132238] rounded-xl p-4 sm:p-5 border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-4 items-start group">
+                  <article key={row.id} className="bg-white dark:bg-[#0E2226] rounded-xl p-4 sm:p-5 border border-line/80 shadow-xs hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-4 items-start group">
                     <Link
                       href={`/${PILAR_SLUGS[row.pilar] || "utility"}/${row.slug}`}
                       className="relative w-full sm:w-56 h-36 rounded-lg overflow-hidden shrink-0 bg-surface-alt block"
@@ -468,7 +469,7 @@ export default async function HomePage() {
               <div className="pt-2 flex justify-center">
                 <Link
                   href="/utility"
-                  className="px-6 py-2.5 rounded-xl bg-white dark:bg-[#132238] hover:bg-primary hover:text-white text-ink border border-line text-xs font-bold transition-all shadow-xs flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-xl bg-white dark:bg-[#0E2226] hover:bg-primary hover:text-white text-ink border border-line text-xs font-bold transition-all shadow-xs flex items-center gap-2"
                 >
                   <span>Muat Berita & Panduan Lainnya</span>
                   <ArrowRight className="h-4 w-4" />
@@ -480,7 +481,7 @@ export default async function HomePage() {
             <aside className="lg:col-span-4 flex flex-col gap-6">
               
               {/* WIDGET 1: Agenda Pasundan & Kalender Event */}
-              <div className="bg-white dark:bg-[#132238] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
+              <div className="bg-white dark:bg-[#0E2226] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
                 <div className="flex items-center justify-between pb-1 border-b border-line">
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4 text-primary" />
@@ -530,10 +531,10 @@ export default async function HomePage() {
               </div>
 
               {/* WIDGET 2: Kolom Opini & Wacana Warga */}
-              <div className="bg-white dark:bg-[#132238] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
+              <div className="bg-white dark:bg-[#0E2226] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
                 <div className="flex items-center justify-between pb-1 border-b border-line">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-primary text-[20px]">edit_note</span>
+                    <PenLine className="h-5 w-5 text-primary" />
                     <h4 className="font-serif text-sm font-bold text-ink uppercase tracking-wide">
                       Kolom Opini
                     </h4>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, ArrowRight, HowToVote, CheckCircle, BarChart3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Vote, CheckCircle, BarChart3 } from "lucide-react";
 import { ArticleItem } from "@/types";
 import { PILAR_SLUGS } from "@/lib/constants";
 
@@ -30,7 +30,7 @@ export function BreakingNewsTicker({ articles }: BreakingTickerProps) {
 
   return (
     <div className="w-full mb-6">
-      <div className="bg-white dark:bg-[#132238] border border-[#e5eeff] dark:border-[#2C3E55] shadow-xs rounded-xl p-2 flex flex-col sm:flex-row items-center gap-3 overflow-hidden">
+      <div className="bg-surface dark:bg-[#0E2226] border border-line shadow-xs rounded-xl p-2 flex flex-col sm:flex-row items-center gap-3 overflow-hidden">
         {/* Badge Indicator */}
         <div className="flex items-center gap-2 bg-primary px-3 py-1.5 rounded-lg text-white shrink-0 self-stretch sm:self-auto justify-center">
           <span className="relative flex h-2 w-2">
@@ -103,11 +103,11 @@ export function CivicPollWidget() {
   };
 
   return (
-    <div className="bg-white dark:bg-[#132238] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
+    <div className="bg-surface dark:bg-[#0E2226] rounded-xl p-5 border border-line/80 shadow-xs flex flex-col gap-3">
       <div className="flex items-center justify-between pb-1">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary text-[20px]">how_to_vote</span>
-          <h4 className="font-serif text-sm font-bold text-ink uppercase tracking-wide">
+          <Vote className="h-5 w-5 text-primary" />
+          <h4 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
             Jajak Pendapat Warga
           </h4>
         </div>
@@ -122,7 +122,7 @@ export function CivicPollWidget() {
 
       {!hasVoted ? (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-1">
-          <label className="flex items-center gap-3 p-2.5 rounded-lg bg-[#eff4ff] dark:bg-[#0b1c30] hover:bg-[#e5eeff] dark:hover:bg-[#1E314B] cursor-pointer transition-colors text-xs text-ink">
+          <label className="flex items-center gap-3 p-2.5 rounded-lg bg-[#F0F7F5] dark:bg-[#071518] hover:bg-[#E6F2EF] dark:hover:bg-[#163035] cursor-pointer transition-colors text-xs text-ink">
             <input
               type="radio"
               name="poll"
@@ -134,7 +134,7 @@ export function CivicPollWidget() {
             <span>Sangat mendesak, pangkas waktu tempuh & dorong ekonomi</span>
           </label>
 
-          <label className="flex items-center gap-3 p-2.5 rounded-lg bg-[#eff4ff] dark:bg-[#0b1c30] hover:bg-[#e5eeff] dark:hover:bg-[#1E314B] cursor-pointer transition-colors text-xs text-ink">
+          <label className="flex items-center gap-3 p-2.5 rounded-lg bg-[#F0F7F5] dark:bg-[#071518] hover:bg-[#E6F2EF] dark:hover:bg-[#163035] cursor-pointer transition-colors text-xs text-ink">
             <input
               type="radio"
               name="poll"
