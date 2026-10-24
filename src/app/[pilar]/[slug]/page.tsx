@@ -178,6 +178,11 @@ export default async function ArticleDetailPage({ params }: PageProps) {
             <span className="text-ink-muted text-[11px] ml-auto sm:ml-2 flex items-center gap-1">
               <CalendarIcon className="h-3.5 w-3.5 text-primary" />
               <span>{formatDate(article.publishedAt)}</span>
+              {formatFreshness(article.contentUpdatedAt, article.publishedAt, article.lastVerifiedAt) && (
+                <span className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-[11px] px-2.5 py-0.5 rounded ml-2">
+                  {formatFreshness(article.contentUpdatedAt, article.publishedAt, article.lastVerifiedAt)}
+                </span>
+              )}
             </span>
           </div>
 
@@ -450,34 +455,58 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Sticky Newsletter Subscription Card */}
-            <div className="sticky top-44 bg-[#213145] text-white p-5 rounded-xl shadow-md border-t-4 border-primary flex flex-col gap-3">
-              <div className="flex items-center gap-2">
-                <Newspaper className="h-5 w-5 text-primary" />
-                <span className="text-xs font-bold uppercase tracking-wider text-white">
-                  Buletin Media Berkualitas
+            {/* Sticky PMG & Social Media Channels Card (Menggantikan Form Langganan) */}
+            <div className="sticky top-44 bg-gradient-to-br from-[#121c24] via-[#10272b] to-[#1a1c2e] text-white p-5 rounded-xl shadow-lg border border-amber-500/30 flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="px-2 py-0.5 rounded bg-amber-400 text-[#0c181a] text-[10px] font-black uppercase tracking-wider">
+                  PMG ZONE 🎮
                 </span>
+                <span className="text-[10px] text-amber-300 font-mono">GAMING & TOYS</span>
               </div>
               <h4 className="font-serif text-sm font-bold text-white">
-                Jangan Tertinggal Berita Pilihan Jawa Barat
+                Suka Game, Mainan Koleksi & Pop Culture?
               </h4>
-              <p className="text-xs text-[#bec6e0] leading-relaxed">
-                Dapatkan kurasi berita mendalam, investigasi eksklusif, dan analisis kebijakan publik langsung di kotak masuk Anda setiap pagi.
+              <p className="text-xs text-[#c6d7e0] leading-relaxed">
+                Jelajahi review game, turnamen esports lokal Tasik, gunpla, dan komunitas mabar seru di Palihmana Gaming!
               </p>
-              <form action="#" className="flex flex-col gap-2 mt-1">
-                <input
-                  type="email"
-                  placeholder="Alamat email aktif Anda..."
-                  className="px-3 py-2 bg-white/10 border border-white/20 text-white placeholder-[#bec6e0]/70 rounded text-xs focus:outline-none focus:border-primary"
-                />
-                <button
-                  type="button"
-                  className="py-2 bg-primary text-white text-xs uppercase font-bold rounded hover:bg-primary-hover transition-colors shadow-xs"
-                >
-                  Berlangganan Sekarang
-                </button>
-              </form>
-              <p className="text-[10px] text-[#bec6e0] text-center">Bebas spam. Berhenti berlangganan kapan pun.</p>
+              <Link
+                href="/pmg"
+                className="py-2 px-3 text-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase rounded-lg transition-all shadow-md font-sans tracking-wide"
+              >
+                Kunjungi Page PMG ⚡
+              </Link>
+
+              <div className="pt-2 border-t border-white/10 flex flex-col gap-1.5 text-[11px]">
+                <p className="text-[10px] text-ink-muted uppercase font-semibold text-white/60">Ikuti Kami:</p>
+                <div className="flex items-center justify-between text-xs">
+                  <a
+                    href="https://www.instagram.com/palihmana.id/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-400 hover:underline font-semibold"
+                  >
+                    IG @palihmana.id
+                  </a>
+                  <span className="text-white/30">•</span>
+                  <a
+                    href="https://www.tiktok.com/@palihmana.id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-400 hover:underline font-semibold"
+                  >
+                    TikTok
+                  </a>
+                  <span className="text-white/30">•</span>
+                  <a
+                    href="https://www.instagram.com/pmg.id/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:underline font-semibold"
+                  >
+                    IG @pmg.id
+                  </a>
+                </div>
+              </div>
             </div>
 
           </aside>

@@ -26,7 +26,9 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>redaksi@palihmana.id | sapa@palihmana.id</span>
+                <a href="mailto:Palihmanaid@gmail.com" className="hover:text-white transition-colors">
+                  Palihmanaid@gmail.com
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary shrink-0" />
@@ -41,6 +43,12 @@ export function Footer() {
               Rubrikasi & Pilar
             </h4>
             <ul className="flex flex-col gap-2 text-xs text-[#bec6e0]">
+              <li>
+                <Link href="/pmg" className="text-amber-400 font-bold hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-amber-400/20 text-amber-300 border border-amber-400/40">NEW</span>
+                  <span>PMG (Gaming & Mainan)</span>
+                </Link>
+              </li>
               <li>
                 <Link href="/utility" className="hover:text-white transition-colors">
                   Utility & Panduan Warga
@@ -133,30 +141,65 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 5: Buletin Pagi */}
+          {/* Col 5: Saluran Sosial & Komunitas PMG (Menggantikan Form Langganan) */}
           <div className="flex flex-col gap-3">
             <h4 className="text-xs uppercase font-bold tracking-wider text-white border-b border-white/15 pb-2">
-              Buletin Digital
+              Kanal Sosial Resmi
             </h4>
             <p className="text-xs text-[#bec6e0] leading-relaxed">
-              Dapatkan rangkuman kurasi informasi terverifikasi dan agenda kota langsung di inbox Anda setiap pagi.
+              Ikuti kabar terverifikasi dan video kurasi kami di platform media sosial resmi Palihmana.id dan PMG.id:
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-2">
-              <input
-                type="email"
-                placeholder="Ketik email aktif Anda..."
-                className="px-3 py-2 bg-white/10 border border-white/20 text-white rounded text-xs placeholder:text-[#bec6e0]/70 focus:outline-none focus:border-primary"
-              />
-              <button
-                type="button"
-                className="py-2 px-3 bg-primary text-white text-xs font-bold uppercase rounded hover:bg-primary-hover transition-colors shadow-xs"
+
+            <div className="flex flex-col gap-2 mt-1">
+              <a
+                href="https://www.instagram.com/palihmana.id/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10 hover:border-primary hover:bg-white/10 transition-all text-xs text-white group"
               >
-                Langganan Buletin
-              </button>
-            </form>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-emerald-400">@palihmana.id</span>
+                  <span className="text-[10px] text-[#bec6e0]">Instagram</span>
+                </div>
+                <span className="text-[11px] text-primary group-hover:translate-x-0.5 transition-transform">↗</span>
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@palihmana.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10 hover:border-primary hover:bg-white/10 transition-all text-xs text-white group"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-emerald-400">@palihmana.id</span>
+                  <span className="text-[10px] text-[#bec6e0]">TikTok</span>
+                </div>
+                <span className="text-[11px] text-primary group-hover:translate-x-0.5 transition-transform">↗</span>
+              </a>
+
+              <a
+                href="https://www.instagram.com/pmg.id/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/20 transition-all text-xs text-white group"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-300">@pmg.id</span>
+                  <span className="text-[10px] text-amber-200/80">Gaming & Toys</span>
+                </div>
+                <span className="text-[11px] text-amber-300 group-hover:translate-x-0.5 transition-transform">↗</span>
+              </a>
+            </div>
+
+            <Link
+              href="/pmg"
+              className="mt-2 text-center py-2 px-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold uppercase rounded-lg transition-all shadow-sm tracking-wide"
+            >
+              Masuk ke PMG Zone 🎮
+            </Link>
 
             <div className="flex items-center gap-2 pt-2 text-[#bec6e0] text-xs">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
               <span className="text-[11px] font-medium">Bebas Sensasi · Taat Kode Etik Pers</span>
             </div>
           </div>
@@ -175,10 +218,7 @@ export function Footer() {
             <Link href="/kebijakan-koreksi" className="hover:text-white transition-colors">
               Koreksi Terbuka
             </Link>
-            <span>•</span>
-            <Link href="/sitemap.xml" className="hover:text-white transition-colors">
-              Sitemap RSS
-            </Link>
+
           </div>
         </div>
       </div>

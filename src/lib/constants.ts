@@ -68,6 +68,17 @@ export const EVENT_STATUS_LABELS: Record<EventStatus, string> = {
   FINISHED: "Selesai",
 };
 
+// ─── PMG (Palihmana Gaming, Toys & Pop Culture) ───────────────
+export type PmgCategory = "GAME_REVIEW" | "TOYS_HOBBY" | "ESPORTS_EVENT" | "GEAR_TECH" | "COMMUNITY";
+
+export const PMG_CATEGORY_LABELS: Record<PmgCategory, string> = {
+  GAME_REVIEW: "Game Review & Tips",
+  TOYS_HOBBY: "Mainan & Koleksi (Toys)",
+  ESPORTS_EVENT: "Esports & Turnamen",
+  GEAR_TECH: "Gaming Gear & Setup",
+  COMMUNITY: "Komunitas & Mabar",
+};
+
 // ─── Site config ────────────────────────────────────────────────
 export const SITE_CONFIG = {
   name: "Palihmana.id",
@@ -76,9 +87,15 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://palihmana.id",
   locale: "id-ID",
   timezone: "Asia/Jakarta",
+  contact: {
+    email: "Palihmanaid@gmail.com",
+    phone: "(0265) 752-1980 / +62 812-2234-5678",
+    address: "Jl. Mayor S.L. Tobing No. 45, Cihideung, Kota Tasikmalaya, Jawa Barat 46122",
+  },
   socials: {
-    instagram: "https://instagram.com/palihmana.id",
-    tiktok: "https://tiktok.com/@palihmana.id",
+    instagram: "https://www.instagram.com/palihmana.id/",
+    tiktok: "https://www.tiktok.com/@palihmana.id",
     facebook: "https://facebook.com/palihmana.id",
+    pmgInstagram: "https://www.instagram.com/pmg.id/",
   },
 };

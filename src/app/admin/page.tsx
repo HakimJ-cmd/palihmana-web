@@ -126,6 +126,12 @@ export default async function AdminDashboardPage() {
             Staf & Kontributor
           </Link>
           <Link
+            href="/admin/pmg"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-bold text-amber-700 dark:text-amber-400 hover:bg-amber-500/20 transition-colors"
+          >
+            🎮 Kelola PMG
+          </Link>
+          <Link
             href="/admin/articles/create"
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-white hover:bg-primary-hover transition-colors shadow-xs"
           >

@@ -291,21 +291,26 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              {/* E-Paper Digital Banner */}
-              <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-between gap-3">
+              {/* PMG Gaming & Toys Zone Banner */}
+              <div className="bg-gradient-to-r from-amber-500/15 via-purple-500/10 to-teal-500/15 border border-amber-500/30 rounded-xl p-4 flex items-center justify-between gap-3 shadow-xs">
                 <div>
-                  <p className="font-serif text-xs text-primary font-bold uppercase tracking-wider">
-                    E-PAPER EDISI TERBARU
-                  </p>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 rounded bg-amber-400 text-[#0f172a] text-[9px] font-black uppercase tracking-wider">
+                      NEW ZONE
+                    </span>
+                    <p className="font-sans text-xs text-amber-700 dark:text-amber-300 font-bold uppercase tracking-wider">
+                      PMG (Gaming & Mainan)
+                    </p>
+                  </div>
                   <p className="text-[11px] text-ink-muted mt-0.5">
-                    Unduh format buletin digital resolusi tinggi
+                    Review game, turnamen esports lokal, gunpla, dan komunitas mabar Tasik
                   </p>
                 </div>
                 <Link
-                  href="/pedoman-editorial"
-                  className="px-3 py-1.5 bg-primary text-white hover:text-white hover:bg-primary-hover text-[11px] font-bold rounded-lg transition-colors shrink-0 shadow-xs"
+                  href="/pmg"
+                  className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-[11px] font-bold rounded-lg transition-all shrink-0 shadow-xs"
                 >
-                  Buka E-Paper
+                  Masuk PMG 🎮
                 </Link>
               </div>
             </div>

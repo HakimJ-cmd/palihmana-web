@@ -69,15 +69,16 @@ export function formatFreshness(
   publishedAt: Date | null | undefined,
   lastVerifiedAt?: Date | null
 ): string {
-  const checkDate = lastVerifiedAt || contentUpdatedAt || publishedAt;
-  if (!checkDate) return "";
   if (lastVerifiedAt) {
     return `Dicek ${formatDateShort(lastVerifiedAt)}`;
   }
   if (contentUpdatedAt) {
     return `Diperbarui ${formatDateShort(contentUpdatedAt)}`;
   }
-  return formatDateShort(publishedAt);
+  if (publishedAt) {
+    return `Terbit ${formatDateShort(publishedAt)}`;
+  }
+  return "";
 }
 
 // ─── String utils ───────────────────────────────────────────────

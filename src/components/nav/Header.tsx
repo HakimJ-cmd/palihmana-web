@@ -242,6 +242,22 @@ export function Header() {
                 </Link>
               );
             })}
+
+            {/* PMG Gaming, Toys & Pop Culture Special Nav */}
+            <Link
+              href="/pmg"
+              prefetch={true}
+              className={`px-3 py-1.5 text-xs sm:text-sm transition-all whitespace-nowrap font-bold flex items-center gap-1.5 rounded mx-1.5 ${
+                pathname === "/pmg"
+                  ? "bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md ring-1 ring-amber-300"
+                  : "bg-amber-400/20 text-amber-300 border border-amber-400/40 hover:bg-amber-400/30 hover:text-white"
+              }`}
+            >
+              <span>🎮 PMG</span>
+              <span className="text-[9px] px-1 py-0.2 rounded bg-amber-400 text-slate-950 font-black uppercase tracking-tighter">
+                GAMING
+              </span>
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-2 pl-4">
@@ -306,6 +322,24 @@ export function Header() {
                   </Link>
                 );
               })}
+
+              {/* PMG Gaming Special Mobile Link */}
+              <Link
+                href="/pmg"
+                prefetch={true}
+                className={`rounded-lg px-3 py-2 transition-all font-bold flex items-center justify-between ${
+                  pathname === "/pmg"
+                    ? "bg-amber-500 text-slate-950 font-black shadow-sm"
+                    : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/20"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span>🎮 PMG (Gaming & Toys)</span>
+                </div>
+                <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black">
+                  NEW
+                </span>
+              </Link>
 
               <div className="my-2 border-t border-line/60" />
               <Link
