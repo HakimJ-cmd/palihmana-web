@@ -136,7 +136,7 @@ export const FALLBACK_ARTICLES: ArticleItem[] = [
     contentUpdatedAt: new Date(Date.now() - 172800000),
     lastVerifiedAt: null,
     author: {
-      name: "Editor Redaksi",
+      name: "Kang Dedi (Kontributor Cihideung)",
       avatar: null,
     },
     tags: [{ tag: { name: "Kuliner", slug: "kuliner" } }],
@@ -170,7 +170,7 @@ export const FALLBACK_ARTICLES: ArticleItem[] = [
     contentUpdatedAt: new Date(Date.now() - 259200000),
     lastVerifiedAt: null,
     author: {
-      name: "Super Admin",
+      name: "Kontributor Budaya Dadaha",
       avatar: null,
     },
     tags: [{ tag: { name: "UMKM", slug: "umkm" } }],
@@ -204,7 +204,7 @@ export const FALLBACK_ARTICLES: ArticleItem[] = [
     contentUpdatedAt: new Date(Date.now() - 345600000),
     lastVerifiedAt: null,
     author: {
-      name: "Editor Redaksi",
+      name: "Teh Siti (Kontributor UMKM Singaparna)",
       avatar: null,
     },
     tags: [{ tag: { name: "Transportasi", slug: "transportasi" } }],
@@ -238,10 +238,44 @@ export const FALLBACK_ARTICLES: ArticleItem[] = [
     contentUpdatedAt: new Date(Date.now() - 432000000),
     lastVerifiedAt: null,
     author: {
-      name: "Super Admin",
+      name: "Kontributor Budaya Dadaha",
       avatar: null,
     },
     tags: [{ tag: { name: "Wisata", slug: "wisata" } }],
+  },
+  {
+    id: "fb-7",
+    title: "Panduan Lengkap Tarif & Rute Angkot Tasikmalaya 2026",
+    slug: "tarif-rute-angkot-tasikmalaya-2026",
+    subtitle: "Daftar trayek angkutan 01 sampai 19, jam operasional, dan ongkos resmi",
+    pilar: "UTILITY" as Pilar,
+    isFeatured: false,
+    coverImage: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
+    coverAlt: "Angkutan kota di perempatan jalan",
+    readingMinutes: 5,
+    summaryPoints: [
+      "Rute 01 s.d 19 melayani pusat kota hingga perbatasan Ciamis & Singaparna",
+      "Tarif umum Rp 4.000, pelajar Rp 2.500",
+      "Peta terminal penghubung Pasar Cikurubuk dan Pancasila",
+    ],
+    bodyText: "Angkutan kota (angkot) masih menjadi pilihan transportasi ekonomis bagi masyarakat Tasikmalaya...",
+    bodyJson: {
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          content: [{ type: "text", text: "Angkutan kota (angkot) masih menjadi pilihan transportasi ekonomis bagi masyarakat Tasikmalaya yang ingin bepergian tanpa repot mencari parkir kendaraan pribadi." }],
+        },
+      ],
+    },
+    publishedAt: new Date(Date.now() - 518400000),
+    contentUpdatedAt: new Date(Date.now() - 518400000),
+    lastVerifiedAt: new Date(Date.now() - 518400000),
+    author: {
+      name: "Editor Redaksi",
+      avatar: null,
+    },
+    tags: [{ tag: { name: "Transportasi", slug: "transportasi" } }],
   },
 ];
 

@@ -65,9 +65,9 @@ export function formatRelative(date: Date | string | null | undefined): string {
 }
 
 export function formatFreshness(
-  contentUpdatedAt: Date | null | undefined,
-  publishedAt: Date | null | undefined,
-  lastVerifiedAt?: Date | null
+  contentUpdatedAt: Date | string | null | undefined,
+  publishedAt: Date | string | null | undefined,
+  lastVerifiedAt?: Date | string | null | undefined
 ): string {
   if (lastVerifiedAt) {
     return `Dicek ${formatDateShort(lastVerifiedAt)}`;

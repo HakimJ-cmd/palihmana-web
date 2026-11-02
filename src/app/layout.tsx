@@ -7,6 +7,7 @@ import { Footer } from "@/components/nav/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { NavigationProgressBar } from "@/components/ui/NavigationProgressBar";
 import { StaffSecretShortcut } from "@/components/auth/StaffSecretShortcut";
+import { PageTracker } from "@/components/analytics/PageTracker";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const inter = Inter({
@@ -82,6 +83,9 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased text-ink bg-bg">
         <ThemeProvider>
+          <Suspense fallback={null}>
+            <PageTracker />
+          </Suspense>
           <Suspense fallback={null}>
             <NavigationProgressBar />
           </Suspense>

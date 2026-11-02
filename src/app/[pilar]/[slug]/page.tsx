@@ -25,6 +25,7 @@ import { getArticleBySlug, getLatestArticles } from "@/modules/articles/queries"
 import { getUpcomingEvents } from "@/modules/events/queries";
 import { PILAR_LABELS, PILAR_SLUGS, SITE_CONFIG } from "@/lib/constants";
 import { formatDate, formatFreshness } from "@/lib/utils";
+import { getArticleViews } from "@/modules/analytics/store";
 import { ArticleToolbar, ReaderReactions, ReaderCommentsSection } from "@/components/article/ArticleInteractiveBar";
 import { ArticleContent } from "@/components/article/ArticleContent";
 import { Pilar } from "@prisma/client";
@@ -78,6 +79,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
   const readingTime = article.readingMinutes || 5;
   const currentUrl = `${SITE_CONFIG.url}/${pilarSlug}/${article.slug}`;
+  const viewCount = await getArticleViews(article.slug);
 
   // Related articles and popular articles for sidebar
   const relatedArticles = await getLatestArticles({
@@ -175,11 +177,17 @@ export default async function ArticleDetailPage({ params }: PageProps) {
                 Konten Kemitraan / Sponsor
               </span>
             )}
-            <span className="text-ink-muted text-[11px] ml-auto sm:ml-2 flex items-center gap-1">
-              <CalendarIcon className="h-3.5 w-3.5 text-primary" />
-              <span>{formatDate(article.publishedAt)}</span>
+            <span className="text-ink-muted text-[11px] ml-auto sm:ml-2 flex flex-wrap items-center gap-2">
+              <span className="flex items-center gap-1">
+                <CalendarIcon className="h-3.5 w-3.5 text-primary" />
+                <span>{formatDate(article.publishedAt)}</span>
+              </span>
+              <span className="inline-flex items-center gap-1 rounded bg-surface-alt border border-line px-2 py-0.5 text-ink font-semibold">
+                <Eye className="h-3 w-3 text-primary" />
+                <span>{viewCount.toLocaleString("id-ID")} dibaca</span>
+              </span>
               {formatFreshness(article.contentUpdatedAt, article.publishedAt, article.lastVerifiedAt) && (
-                <span className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-[11px] px-2.5 py-0.5 rounded ml-2">
+                <span className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-[11px] px-2.5 py-0.5 rounded">
                   {formatFreshness(article.contentUpdatedAt, article.publishedAt, article.lastVerifiedAt)}
                 </span>
               )}

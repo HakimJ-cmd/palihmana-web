@@ -13,6 +13,10 @@ import {
   MapPin,
   AlertCircle,
   FileSpreadsheet,
+  Users,
+  UserPlus,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { getLatestArticles } from "@/modules/articles/queries";
@@ -21,6 +25,10 @@ import { formatDateShort } from "@/lib/utils";
 import { getSession } from "@/lib/session";
 import { LogoutButton } from "@/components/admin/LogoutButton";
 import { ArticleRowActions } from "@/components/admin/ArticleRowActions";
+import { getStaffProductivityStats } from "@/modules/users/store";
+import { getAnalyticsSummary } from "@/modules/analytics/store";
+import { ProductivityChart } from "@/components/admin/ProductivityChart";
+import { AnalyticsDashboardView } from "@/components/admin/AnalyticsDashboardView";
 import { db } from "@/lib/db";
 
 export const metadata = {
@@ -29,7 +37,11 @@ export const metadata = {
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
+  const isSuperAdmin =
+    session?.role === "SUPER_ADMIN" || (!session && process.env.NODE_ENV !== "production");
   const articles = await getLatestArticles({ limit: 15 });
+  const productivityData = await getStaffProductivityStats();
+  const analyticsSummary = await getAnalyticsSummary();
 
   // Fetch recent audit logs if DB is available
   let recentAuditLogs: any[] = [];
@@ -121,9 +133,14 @@ export default async function AdminDashboardPage() {
           </Link>
           <Link
             href="/admin/users"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-semibold text-ink hover:bg-surface-alt transition-colors"
+            className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${
+              isSuperAdmin
+                ? "border-teal-500/40 bg-teal-500/10 text-teal-700 dark:text-teal-300 hover:bg-teal-500/20"
+                : "border-line bg-surface text-ink hover:bg-surface-alt"
+            }`}
           >
-            Staf & Kontributor
+            <Users className="h-3.5 w-3.5" />
+            <span>Manajemen Kontributor</span>
           </Link>
           <Link
             href="/admin/pmg"
@@ -179,6 +196,17 @@ export default async function AdminDashboardPage() {
           <p className="mt-1 text-[11px] text-ink-muted">{discoverPct}% dari total (Target 15%)</p>
         </div>
       </div>
+
+      {/* ─── 1. Super Admin Exclusive: Productivity Chart ─────────── */}
+      {isSuperAdmin && (
+        <ProductivityChart
+          data={productivityData}
+          isSuperAdmin={isSuperAdmin}
+        />
+      )}
+
+      {/* ─── 2. Reader Analytics & Article Views (Tap Artikel) ─────── */}
+      <AnalyticsDashboardView initialSummary={analyticsSummary} />
 
       {/* ─── Editorial Policy Compliance & Audit Trail ─────────────── */}
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
